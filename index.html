@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Animal Game</title>
+  </head>
+  <body>
+    <div class="page-container">
+      <div class="instructions">
+        <h1>Let's learn about animals</h1>
+        <p>Does your child know the name and sounds of these animals?</p>
+        <p>
+          Press the corresponding
+          <kbd class="instruction-key">letter key</kbd> on the keyboard to
+          reveal it's name and sounds.
+        </p>
+      </div>
+      <div class="table-container">
+        <table>
+          <tr>
+            <td>
+              <img src="images/cat.jpg" alt="cat" />
+              <div data-key="67" class="key">
+                <kbd>C</kbd>
+              </div>
+            </td>
+            <td>
+              <img src="images/dog.jpg" alt="dog" />
+              <div cdata-key="68" class="key">
+                <kbd>D</kbd>
+              </div>
+            </td>
+            <td>
+              <img src="images/elephant.jpg" alt="elephant" />
+              <div data-key="69" class="key">
+                <kbd>E</kbd>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="images/hyena.jpg" alt="hyena" />
+              <div data-key="72" class="key">
+                <kbd>H</kbd>
+              </div>
+            </td>
+            <td>
+              <img src="images/lion.jpeg" alt="lion" />
+              <div data-key="76" class="key">
+                <kbd>L</kbd>
+              </div>
+            </td>
+            <td>
+              <img src="images/pig.jpg" alt="pig" />
+              <div data-key="80" class="key">
+                <kbd>P</kbd>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="images/snake.jpg" alt="snake" />
+              <div data-key="83" class="key">
+                <kbd>S</kbd>
+              </div>
+            </td>
+            <td>
+              <img src="images/tiger.jpg" alt="tiger" />
+              <div data-key="84" class="key">
+                <kbd>T</kbd>
+              </div>
+            </td>
+            <td>
+              <img src="images/zebra.jpg" alt="zebra" />
+              <div data-key="90" class="key">
+                <kbd>Z</kbd>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <audio data-key="67" src="sounds/cat.mp3"></audio>
+      <audio data-key="68" src="sounds/dog.mp3"></audio>
+      <audio data-key="69" src="sounds/elephant.mp3"></audio>
+      <audio data-key="72" src="sounds/hyena.mp3"></audio>
+      <audio data-key="76" src="sounds/lion.mp3"></audio>
+      <audio data-key="80" src="sounds/pig.mp3"></audio>
+      <audio data-key="83" src="sounds/snake.mp3"></audio>
+      <audio data-key="84" src="sounds/tiger.mp3"></audio>
+      <audio data-key="90" src="sounds/zebra.mp3"></audio>
+    </div>
+
+    <script>
+      function playSound(e) {
+        const audio = document.querySelector(
+          `audio[data-key = "${e.keyCode}"]`
+        );
+        const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+        if (!audio) return;
+        audio.currentTime = 0;
+        audio.play();
+        key.classList.add(`playing`);
+      }
+
+      function removeTransition(e) {
+        // console.log(">>>> inside removeTransition");
+        if (e.propertyName !== `transform`) return;
+        //console.log(">>>>> [removeTransition]");
+        this.classList.remove(`playing`);
+      }
+      const keys = document.querySelectorAll(`.key`);
+      keys.forEach((key) =>
+        key.addEventListener(`transitionend`, removeTransition)
+      );
+
+      window.addEventListener(`keydown`, playSound);
+    </script>
+  </body>
+</html>
